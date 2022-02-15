@@ -1,0 +1,12 @@
+body {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+.container {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  width: 800px;
+  height: auto;
+}
