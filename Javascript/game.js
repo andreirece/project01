@@ -24,7 +24,7 @@ imgPipeTop.src = "../Images/pipe_top.png";
 
 const myObstacles = [];
 
-let gravity = 0.1;
+
 
 class GameObject {
   constructor(x, y, width, height, img, img2, speed) {
@@ -42,10 +42,20 @@ class GameObject {
 
   draw() {
     ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+    ctx.drawImage(this.img2, this.x, this.y - 980, this.width, this.height);
   }
 
-  draw1() {
-    ctx.drawImage(this.img2, this.x, this.y - 980, this.width, this.height);
+  left() {
+    return this.x;
+  }
+  right() {
+    return this.x + this.width;
+  }
+  top() {
+    return this.y;
+  }
+  bottom() {
+    return this.y - 180;
   }
 }
 
@@ -77,21 +87,20 @@ class PlayerComponent {
 
   crashWith = (newObs) => {
     if (
-      !(
-        this.bottom() < newObs.top() ||
-        this.top() > newObs.bottom() ||
-        this.right() < newObs.left() ||
-        this.left() > newObs.right()
-      )
+      this.right() >= newObs.left() &&
+      this.left() <= newObs.right() &&
+      (this.bottom() > newObs.top() || this.top() < newObs.bottom())
     ) {
-      console.log("bateu");
+      return true;
     }
+    return false;
   };
 }
 
 const player = new PlayerComponent(100, 320, 70, 47, imgBird1, 4);
 
 function interactionGravity() {
+  let gravity = 0.1
   player.draw();
   player.vy += gravity;
   player.y += player.vy;
@@ -128,11 +137,10 @@ const moveBackground = {
   },
 };
 
-let newObs = {}
 function newObstacle() {
   gameArea.frames++;
   if (gameArea.frames % 120 === 0) {
-    newObs = new GameObject(
+    const newObs = new GameObject(
       480,
       Math.random() * (570 - 300) + 300,
       100,
@@ -146,18 +154,15 @@ function newObstacle() {
   for (let i = 0; i < myObstacles.length; i++) {
     myObstacles[i].move();
     myObstacles[i].draw();
-    myObstacles[i].draw1();
   }
 }
+
 function checkGameOver() {
-  
-
   myObstacles.forEach((newObs) => {
-    console.log(player.crashWith(newObs));
+    player.crashWith(newObs);
   });
-
- 
 }
+
 function updateCanvas() {
   ctx.clearRect(
     0,
@@ -176,3 +181,9 @@ function updateCanvas() {
   requestAnimationFrame(updateCanvas);
 }
 updateCanvas();
+
+// start = () => {
+  
+//   document.addEventListener("keydown", (enter) => {updateCanvas()});
+// };
+// start();
