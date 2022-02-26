@@ -5,16 +5,16 @@ const gameArea = {
 const ctx = gameArea.canvasGameElement.getContext("2d");
 
 const imgBackground = new Image();
-imgBackground.src = "../Images/background.png";
+imgBackground.src = "./Images/background.png";
 
 const imgBird = new Image();
-imgBird.src = "../Images/bird_1.png";
+imgBird.src = "./Images/bird_1.png";
 
 const imgPipe = new Image();
-imgPipe.src = "../Images/pipe.png";
+imgPipe.src = "./Images/pipe.png";
 
 const imgPipeTop = new Image();
-imgPipeTop.src = "../Images/pipe_top.png";
+imgPipeTop.src = "./Images/pipe_top.png";
 
 let myObstacles = [];
 
